@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvTranscription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Transcription will appear here"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/etManualInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Edit or add task/event manually"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/btnRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Recording"
+        android:padding="12dp"
+        android:gravity="center"
+        app:backgroundTint="@android:color/black"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/btnCreateTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Task"
+        android:padding="12dp"
+        android:gravity="center"
+        app:backgroundTint="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/btnCreateEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Calendar Event"
+        android:padding="12dp"
+        android:gravity="center"
+        app:backgroundTint="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"/>
+
+</LinearLayout>
