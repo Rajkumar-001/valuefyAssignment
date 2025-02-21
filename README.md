@@ -87,6 +87,6 @@ This project is licensed under the **MIT License**.
 ## 📬 Contact
 
 - **Developer:** Raj Kumar Pandey
-- **GitHub:** [Rajkumar-001](https://Rajkumar-001/yourusername)
+- **GitHub:** [https://github.com/rajkumar-001](https://github.com/rajkumar-001)
 - **Email:** [rpandeya12345@gmail](mailto\:rpandeya12345@gmail)
 
