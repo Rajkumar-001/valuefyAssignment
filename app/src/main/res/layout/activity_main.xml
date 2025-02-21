@@ -40,16 +40,6 @@
         android:textColor="@android:color/white"/>
 
     <Button
-        android:id="@+id/btnCreateTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Task"
-        android:padding="12dp"
-        android:gravity="center"
-        app:backgroundTint="@android:color/holo_blue_light"
-        android:textColor="@android:color/white"/>
-
-    <Button
         android:id="@+id/btnCreateEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

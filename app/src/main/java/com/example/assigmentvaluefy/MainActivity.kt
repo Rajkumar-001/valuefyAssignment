@@ -1,7 +1,5 @@
 package com.example.assigmentvaluefy
-
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -17,11 +15,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.util.*
-
 class MainActivity : AppCompatActivity() {
     private lateinit var tvTranscription: TextView
     private lateinit var etManualInput: EditText
     private lateinit var btnRecord: Button
+    private lateinit var btnCreateEvent: Button
     private lateinit var speechRecognizer: SpeechRecognizer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         tvTranscription = findViewById(R.id.tvTranscription)
         etManualInput = findViewById(R.id.etManualInput)
         btnRecord = findViewById(R.id.btnRecord)
+        btnCreateEvent = findViewById(R.id.btnCreateEvent)
 
         // Initialize Speech Recognizer
         initializeSpeechRecognizer()
@@ -39,23 +38,47 @@ class MainActivity : AppCompatActivity() {
             if (checkAudioPermission()) {
                 startVoiceRecognition()
             } else {
-                showToast("Please grant microphone permission")
+                requestAudioPermission()
+            }
+        }
+
+        btnCreateEvent.setOnClickListener {
+            val text = etManualInput.text.toString()
+            if (text.isNotEmpty()) {
+                createCalendarEvent(text)
+            } else {
+                showToast("Enter event details first")
             }
         }
     }
 
-    // Check and Request Permission for Microphone
     private fun checkAudioPermission(): Boolean {
-        return if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestAudioPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
-            false
-        } else {
-            true
         }
     }
 
-    // Initialize Speech Recognizer
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showToast("Permission granted! Tap the record button again.")
+            } else {
+                showToast("Permission denied! Please enable microphone access in settings.")
+            }
+        }
+    }
+
     private fun initializeSpeechRecognizer() {
+        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+            showToast("Speech Recognition not available on this device")
+            return
+        }
+
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
             override fun onResults(results: Bundle?) {
@@ -64,14 +87,25 @@ class MainActivity : AppCompatActivity() {
                     val text = matches[0]
                     tvTranscription.text = text
                     etManualInput.setText(text)
-                    createCalendarEvent(text)
+                } else {
+                    showToast("No speech detected. Please try again.")
                 }
-                restartListening()
             }
 
             override fun onError(error: Int) {
-                showToast("Speech recognition failed. Restarting...")
-                restartListening() // Restart on failure
+                val errorMessage = when (error) {
+                    SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
+                    SpeechRecognizer.ERROR_CLIENT -> "Client-side error"
+                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions"
+                    SpeechRecognizer.ERROR_NETWORK -> "Network error"
+                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+                    SpeechRecognizer.ERROR_NO_MATCH -> "No speech match found"
+                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognizer busy"
+                    SpeechRecognizer.ERROR_SERVER -> "Server error"
+                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "Speech timeout"
+                    else -> "Unknown error: $error"
+                }
+                showToast("Error: $errorMessage")
             }
 
             override fun onReadyForSpeech(params: Bundle?) {}
@@ -84,8 +118,10 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // Start Speech Recognition
     private fun startVoiceRecognition() {
+        // Stop any ongoing recognition before starting a new session
+        speechRecognizer.stopListening()
+
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
@@ -94,14 +130,6 @@ class MainActivity : AppCompatActivity() {
         speechRecognizer.startListening(intent)
     }
 
-    // Restart Speech Recognition for Continuous Listening
-    private fun restartListening() {
-        speechRecognizer.stopListening() // Stop if active
-        speechRecognizer.cancel()
-        startVoiceRecognition() // Restart immediately
-    }
-
-    // Create Calendar Event Automatically
     private fun createCalendarEvent(eventDetails: String) {
         val intent = Intent(Intent.ACTION_INSERT).apply {
             data = CalendarContract.Events.CONTENT_URI
@@ -119,11 +147,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Show Toast Message
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
     override fun onDestroy() {
         super.onDestroy()
         speechRecognizer.destroy()
