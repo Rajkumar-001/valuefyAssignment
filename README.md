@@ -60,7 +60,7 @@ Voice-to-Calendar is an Android application that enables users to **record voice
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/Rajkumar-001/voice-to-calendar.git
+   git clone https://github.com/Rajkumar-001/valuefyAssignment
    ```
 2. Open the project in **Android Studio**.
 3. Ensure you have **Google Play Services** installed.
