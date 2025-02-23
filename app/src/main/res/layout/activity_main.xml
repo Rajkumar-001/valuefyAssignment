@@ -5,48 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".MainActivity">
+    android:padding="24dp" android:background="#F0F4C3" tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/tvTranscription"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Transcription will appear here"
+        android:layout_height="0dp" android:layout_weight="1"
+        android:text="Tap 'Start Recording' to begin...\n\nTranscription will appear here."
         android:textSize="18sp"
-        android:padding="8dp"
-        android:gravity="center"
-        android:background="@android:color/darker_gray"
-        android:textColor="@android:color/black" />
-
-    <EditText
-        android:id="@+id/etManualInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Edit or add task/event manually"
-        android:padding="8dp"
-        android:background="@android:color/white"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"/>
-
-    <Button
-        android:id="@+id/btnRecord"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start Recording"
-        android:padding="12dp"
-        android:gravity="center"
-        app:backgroundTint="@android:color/black"
-        android:textColor="@android:color/white"/>
-
-    <Button
-        android:id="@+id/btnCreateEvent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Calendar Event"
-        android:padding="12dp"
-        android:gravity="center"
-        app:backgroundTint="@android:color/holo_green_dark"
-        android:textColor="@android:color/white"/>
+        android:padding="16dp"
+        android:gravity="top|start" android:background="#FFFFFF" android:textColor="@android:color/black"
+        android:fontFamily="monospace"
+        android:layout_marginBottom="16dp"/> <ProgressBar
+    android:id="@+id/progressBar"
+    style="?android:attr/progressBarStyleHorizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:indeterminate="true"
+    android:visibility="gone"
+    android:layout_marginBottom="16dp"/> <EditText
+    android:id="@+id/etManualInput"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Edit or add notes here..."
+    android:padding="12dp"
+    android:background="#E0E0E0" android:textColor="@android:color/black"
+    android:textSize="16sp"
+    android:layout_marginBottom="24dp"/> <Button
+    android:id="@+id/btnRecord"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Start Recording"
+    android:padding="14dp"
+    android:textSize="18sp"
+    android:gravity="center"
+    app:backgroundTint="#4CAF50" android:textColor="@android:color/white"
+    android:layout_marginBottom="12dp"/> <Button
+    android:id="@+id/btnCreateEvent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Create Calendar Event"
+    android:padding="14dp"
+    android:textSize="18sp"
+    android:gravity="center"
+    app:backgroundTint="#2196F3" android:textColor="@android:color/white"/>
 
 </LinearLayout>
