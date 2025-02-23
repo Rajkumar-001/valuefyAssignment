@@ -1,3 +1,6 @@
+📽️ Demo & Presentation
+📽 Video Demonstration: Watch Here
+📑 Presentation (PPT): View Here
 # 📅 Voice-to-Calendar (Kotlin Android App)
 
 ## 🚀 Project Overview
