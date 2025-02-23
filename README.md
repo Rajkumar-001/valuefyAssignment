@@ -1,8 +1,10 @@
-📽️ Demo & Presentation
-📽 Video Demonstration: Watch Here
-📑 Presentation (PPT): View Here
 # 📅 Voice-to-Calendar (Kotlin Android App)
 
+## 📽️ Demo & Presentation  
+
+📽 **[Video Demonstration](https://drive.google.com/drive/u/0/folders/1yJo_GFDkzU0nSaER1Bs0SpIyYebnkrlq)**  
+
+📑 **[Presentation (PPT)](https://drive.google.com/drive/u/0/folders/1yJo_GFDkzU0nSaER1Bs0SpIyYebnkrlq)**  
 ## 🚀 Project Overview
 
 Voice-to-Calendar is an Android application that enables users to **record voice inputs**, **transcribe speech to text**, and **automatically create calendar events**. It utilizes **Google's Speech Recognition API** and **Android's Calendar API** to streamline task management.
